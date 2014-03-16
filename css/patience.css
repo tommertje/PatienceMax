@@ -1,0 +1,682 @@
+body {
+    background-color: #000000;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;  
+}
+
+/* ADD 'DO NOT SELECT' TO ALL DIVS to avoid BLUE SELECTION blocks */
+div {
+    -ms-touch-action: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;  
+}
+
+/* MENU SLIDE IN AND OUT IN CSS for BETTER PERFORMANCE */
+div.playfield {
+  /*left: 20px; */
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+/* maybe also replace other transition() */
+
+@media all {
+	div#preloader {
+		position: absolute;
+		left: -9999px;
+		top:  -9999px;
+		}
+	div#preloader img {
+		display: block;
+		}
+	}
+
+/* iPad landscape and pc and laptop */
+@media all /*and (max-width: 1024px)*/ {
+    #playfield {
+        /*background-image: url(../images/background.png);*/
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top;        
+    }
+    #menu #menu_title, #logo{
+        height: 36px;
+        font-size: 15px;
+        line-height: 28px;
+    }
+    #menu_title, #logo{
+        padding:15px 0px 0px 0px;
+    }
+    #menu_bar {
+        height: 50px;
+    }
+    #menu ul {
+        font-size: 15px;
+        text-indent: 15px;
+    }
+    #menu ul li {
+        line-height: 35px;
+    }
+    /*#menu li {
+        height: 36px; /* relatief maken aan screen.height 
+    }*/
+    #menu_button, #refresh_button {
+        top:10px;
+        width:34px;
+        height:29px;
+    }
+    #menu_button {
+        left:10px;
+    }
+    #refresh_button {
+        right:10px;
+    }
+    #notification_message_sp {
+        font-size: 16px;
+        left: 40px;
+    }
+}
+
+/* Phones */
+@media all and (max-width: 580px) { /* of 480 ? */
+    /* styles for iPhone/Android landscape (and really narrow browser windows) */
+    /*#playfield {
+        background-image: url(../images/background.png);
+    }*/
+    #menu #menu_title, #logo{
+        height: 15px;
+        font-size: 10px;
+        line-height: 15px; /* test this */
+    }
+    #menu_title, #logo{
+        padding:1px 0px 0px 0px;
+    }
+    #menu_bar {
+        height: 15px;
+    }
+    #menu ul {
+        font-size: 10px;
+        text-indent: 10px;
+    }
+    #menu ul li {
+        line-height: 17px;
+    }
+    #menu li {
+        height: 17px; /* relatief maken aan screen.height */
+    }
+    /*#menu ul li ul {
+        height: 17px;
+        line-height: 17px;
+    }*/
+    #menu_button, #refresh_button {
+        top:1px;
+        width:16px;
+        height:13px;
+    }
+    #menu_button {
+        left:3px;
+    }
+    #refresh_button {
+        right:3px;
+    }
+    #notification_message_sp {
+        font-size: 10px;
+        left: 20px;
+    }
+}
+
+/* MENU elements */
+#menu_bar {
+    z-index: 360;
+    margin-top: 0px;
+    background-color:#000000;
+    background-image:-webkit-linear-gradient(top, #25282b, #181a1d);
+    border-bottom-color:#020303;
+    border-bottom-style:solid;
+    border-bottom-width:2px;
+    text-align: left;
+    left: 0px;
+    top:0px;
+    min-width: 100%;
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+}
+
+/*#menu, #playfield 
+#menu, #playfield {
+    display: inline;
+}
+ */
+
+#menu {
+    top:0px;
+    float: left;
+    position: fixed;
+}
+
+/* IPAD FIX MENU BAR */
+#menu_bar {
+    background-color:#000000;
+    position:absolute;
+    top: 0px;
+    width: 100%;
+}
+
+#menu_button {
+    background-image: url(../images/menu_button.png);
+}
+
+#refresh_button {
+    background-image: url(../images/button_reload.png);
+}
+
+#menu_button, #refresh_button {
+    background-size:cover;
+    position:absolute;
+}
+
+#menu ul {
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant:small-caps;
+    font-weight:900;
+    color: #828990;
+    list-style: none;
+}
+
+#menu #menu_title, #logo{
+    background: #1e2328;
+    background-image:-webkit-linear-gradient(top, #25282b, #181a1d);
+    /*height: 36px;*/
+    border-bottom: 2px solid #020303;
+}
+
+#menu_title {
+    font-family: Arial, Helvetica, sans-serif;
+    color:#ffffff;
+    text-indent: 15px;
+    font-variant:small-caps;
+    font-weight:900;
+}
+
+#menu ul li {
+    width: 190px;
+    background: #181a1e;
+    border-bottom: 2px solid #020303;
+}
+
+#menu #lowest_menuitem {
+    width: 190px;
+    background: #181a1e;
+    /*line-height: 28px;*/
+    border-bottom: 2px solid #020303;
+    height:500px; /* moet dit niet 100% zijn? */
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #828990;
+    display: block;
+}
+
+#menu ul li a:hover {
+    background: #26292e;
+}
+
+#menu ul li#active {
+    background: #26292e;
+}
+
+#tutorial #savegame #about {
+    display: none;
+}
+
+#simplemodal-overlay {
+    background-color: #000;
+}
+
+/*#notification h3 {    
+    font-family: Verdana, Arial;
+    font-size: 14px;
+    color:#b0a06f;
+    font-variant:small-caps;
+    font-weight:900;
+    padding-top:55px;
+    width:615px;
+}*/
+
+/*#notification_sp {
+    position: absolute;
+    background-image: url(../images/notification_background_sp.png);
+    background-position-x:0px;
+    background-position-y:0px;
+    background-repeat:no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight:900;
+    color:#000000;
+    bottom:0;
+    top:500px;
+    left:0px;
+    margin-left:0px; /*negative half the width 
+    width:608px;
+    height:158px;
+}
+
+#notification_sp h3 {
+position: absolute;
+    font-family: Verdana, Arial;
+    font-size: 18px;
+    color:#000000;
+    font-variant:small-caps;
+    font-weight:900;
+    padding-top:5px;
+    left:50px;
+    width:615px;
+}*/
+
+/*.notification_message_sp {
+    position: absolute;
+    left:50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight:900;
+    color:#000000;
+}*/
+
+#notification_message_sp {
+    /*margin-top:0px;
+    vertical-align:text-top;*/
+    position: absolute;
+    /*height: 90px;
+    width: 100px;*/
+    opacity: 0.8;
+    z-index: 100;
+    color: #b0a06f;
+    /*font-size: 17px;*/
+}
+
+/* END GAME MESSAGE */
+/*#notification_sp_game_end {
+    position:fixed;
+    background-image: url(../images/notification_background_sp_game_end.png);
+    background-position-x:0px;
+    background-position-y:0px;
+    background-repeat:no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight:900;
+    color:#000000;
+    bottom:0;
+    top:384px;
+    left:0px;
+    margin-left:0px; /*negative half the width 
+    width:608px;
+    height:300px;
+
+}
+
+#notification_sp_game_end h3 {
+    position:fixed;
+    font-family: Verdana, Arial;
+    font-size: 18px;
+    color:#000000;
+    font-variant:small-caps;
+    font-weight:900;
+    padding-top:15px;
+    left:50px;
+    width:615px;
+}*/
+
+.notification_message_sp_game_end {
+    margin-left:150px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight:900;
+    color:#000000;
+}
+
+/*#notification {
+position: absolute;
+    background-image: url(../images/notification_background.png);
+    background-position-x:0px;
+    background-position-y:0px;
+    background-repeat:no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight:900;
+    color:#b0a06f;
+    bottom:0;
+    left:50%;
+    margin-left:-325px;
+    width:700px;
+    height:151px;
+
+}
+.notification_message {
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight:900;
+    color:#b0a06f;
+}*/
+
+/*#notification_close_button {
+    background: url(../images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 200;
+    position: absolute;
+    top: 0;/*6px;
+    right: 24px;
+    color:#b0a06f;
+}*/
+
+#simplemodal-container {
+    background-size:cover;
+    background-image:url(../images/dialog_background.png);
+    font-family: Verdana, Arial;
+    font-size: 12px;
+    height: 500px;
+    width: 700px;
+    color: #bbb;    
+    border: 1px solid #000;
+    padding: 12px;
+    -moz-box-shadow:  8px 8px 10px #000;
+    -webkit-box-shadow: 8px 8px 10px #000;
+    box-shadow: 8px 8px 10px #000;
+    -moz-box-shadow: 8px 8px 9px black;
+    -webkit-box-shadow: 8px 8px 9px black;
+    box-shadow: 8px 8px 9px black;
+}
+
+#simplemodal-container .simplemodal-data {
+    color:#b0a06f;
+    margin-left:90px;
+    padding: 8px;
+    height: 400px;
+    width: 500px;
+}
+
+#simplemodal-container code {
+    color:#b0a06f;
+    background: #141414;
+    border-left: 3px solid #65B43D;
+    color: #bbb;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 12px;
+    padding: 4px 6px 6px;
+}
+
+#simplemodal-container a {
+    color:#b0a06f;
+}
+
+#simplemodal-container a.modalCloseImg {
+    background: url(../images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#simplemodal-container h3 {
+    color: #84b8d9;
+}
+
+a.save_buttons {
+    float: left;
+    font-family: Verdana,Arial;
+    text-decoration: none;
+    font-weight: 900;
+    text-align: center;
+    display: block;
+    height: 20px;
+    width: 100px;
+    background: #26292e;
+    margin: 2px 2px 2px 2px;
+    border: 2px solid;
+    border-color: #444444;
+}
+
+.loadablegames { /* no attributes : this class is only used to link with loadablegames() function */
+}
+
+/* GAME elements */
+#playfield {
+    color:#b0a06f;
+    position: fixed;
+    top: 0px; /* IPAD FIX MENU BAR */
+    background-color: #000000;
+    background-image: url(../images/background.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    /* background-position:left center;*/
+    /*text-align:center; waar is dit voor ? */
+    min-width:100%;
+    width: 100%;
+    z-index: 5;
+    left: 0px;
+    height: 100%;    
+}
+
+/* ADDED SHADOW LEFT FROM PLAYFIELD FOR NICER LOOK WHEN MENU IS OUT */
+#playfield:before {
+    position: absolute; 
+    content: ' '; /* NEEDED TO GET THE TRICK DONE! */
+    top: 7px; 
+    right: 1px; 
+    bottom: -7px;
+    left: 1px; 
+    background-color: transparent; 
+    box-shadow: 0 0 20px #000000;
+    border: 0px solid #000000;
+}
+
+.draggable { /* no attributes : this class is only used to link with draggable() function (and doubletap event) */
+}
+
+.droppable_highlight {
+    border-style:solid; /* is dit mooi of lelijk ? vooral als je hier bij piles een kaart bovenop legt  */
+    border-width:2px;
+}
+
+.shadow {
+    -moz-box-shadow:  8px 8px 10px #000;
+    -webkit-box-shadow: 8px 8px 10px #000;
+    box-shadow: 8px 8px 10px #000;
+    -moz-box-shadow: 2px 2px 3px black;
+    -webkit-box-shadow: 2px 2px 3px black;
+    box-shadow: 2px 2px 3px black;
+}
+
+.drag_shadow { /* #game_end is not used... */
+    -moz-box-shadow:  8px 8px 10px #000;
+    -webkit-box-shadow: 8px 8px 10px #000;
+    box-shadow: 8px 8px 10px #000;
+    -moz-box-shadow: 8px 8px 9px black;
+    -webkit-box-shadow: 8px 8px 9px black;
+    box-shadow: 8px 8px 9px black;
+}
+
+.card {
+    max-height:96px; /* misschien ook een min-height en width ? */
+    max-width: 71px;
+    background-size:cover;
+    background-repeat: no-repeat; /* is dit nodig ? */
+    position: absolute;
+}
+
+.card_on_playfield {
+    /*height: 50px; /*96px*/
+    /*width: 71px;*/
+    left:20px;
+    top:70px;
+    -ms-touch-action: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    /*background-size: contain; werkt niet..te vroeg?*/
+}
+
+/*#hands_container {
+        position: absolute;
+        top:40px;
+}*/
+
+#hands /* the location of the card_in_hand's */ {
+    background-position: top left;
+    /*background-image: url('../images/hand_background.png');*/
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: absolute;
+    /*top: 565px; /* voor de ipad kan dit 700 zijn 572 / 450 hoe gaan we dit flexibel bepalen? 100 + ( 9 * 25 ) + 10 + een marge */
+    left: 24%; /* 34% */
+    /*width: 415px; /* dit 340 vervangen door #hands.width = 4 or 5 * card.width ? */
+    /*height: 150px; /*verplaatsen naar constantCardHeight */
+    /*left: 390px; */
+    /*opacity:0.3; dit moet anders, want het werkt door op carcard_on_playfield_hand */
+    z-index:1;/*19;*/
+}
+
+.card_in_hand {
+    top:2px;  
+    /*left: 0px;*/
+    /*max-height:96px; 
+    max-width: 71px;*/
+    /* misschien ook een min-height en width ? */
+    /*width: 71px;
+    height: 96px;*/
+    opacity: 1;
+    -ms-touch-action: none;
+    /*background-size:cover;*/
+}
+
+.card_border_background {
+    background-image: url('../images/hand_background_1card.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: absolute;  
+    top:0px;  
+}
+
+#piles /* the location of the card_on_pile's */ {
+    /*background-position: top left;
+    background-image: url('../images/ace_background.png');
+    background-repeat:no-repeat;
+    background-size:cover;*/
+    /*background-position-x:0px;
+    background-position-y:0px; waar is dit voor ? */
+    position: absolute;
+    /*width:162px;*/
+    /*height: 450px;*/ /* 4 * constandCardHeight */
+    /*margin-left:0px;
+    margin-right:0px;*/
+    /*top:-500px; heeft dit effect?*/
+}
+
+.card_on_pile {
+    top: 572px; /*dit moet weg of nul*/
+    left: 79px; /*dit moet weg of nul*/
+    /*height: 96px; 
+    width: 71px;*/ 
+    z-index: 40;
+    /*background-repeat: no-repeat;
+    background-size:cover;*/
+    -moz-box-shadow: 2px 2px 3px #000;
+    -webkit-box-shadow: 2px 2px 3px #000;
+    box-shadow: 2px 2px 3px #000;
+    -ms-touch-action: none;
+}
+
+#feedback, #feedbackform  /*field & submitbutton*/  {
+    position: absolute;
+    /*width:162px;
+    height: 50px;*/
+    margin-left:0px;
+    margin-right:0px;
+}
+
+/*.ss-top-of-page .ss-form-title {
+    display: none;*/
+}
+
+h1.ss-form-title { display: none; }
+
+
+/* GAME INTRO */
+/*#intro {
+    position:absolute;
+}
+#skipIntro, #loading {
+    display: none;
+    position:absolute;
+    z-index:10;
+}*/
+
+/*#picOne, #picTwo, #picLoading {
+    top:0px;
+    left:0px;
+display: none;
+position:absolute;
+}*/
+
+/*#preloading_screen {*/
+/*
+    background-color:black; 
+    background-image: url(../images/intro_patiencemax_11.png);
+    background-size:cover;
+    background-position-x:0px;
+    background-position-y:0px;
+    background-repeat:no-repeat;
+    */
+/*    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:900;
+    color:#000000;
+    top:0%; 
+    text-align:center; 
+    left:0%; 
+    right:0%; 
+    height:100%; 
+    width:100%;
+    z-index:800;
+    
+}
+
+#game_intro, #skip {    
+    color:#000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:24px;
+    font-weight:900;
+    text-decoration:none;
+}
+    */
+
+/*        .column { /* WILL be used to drop cards on, in case the column is empty , unless we use the coordiantes-method 
+            position:absolute;
+            top:10px;  
+            background-repeat: no-repeat;
+            width: 79px; /* this width is wider than the actual image (71px), wich results in a 8px (white) margin on the right of each card 
+            height: 400px;
+            z-index:0; /* 1 lower than cards, because it is underneath 
+        } */

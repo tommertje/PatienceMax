@@ -1,0 +1,168 @@
+ <!--
+     todo versie 1
+R
+TAB moet TAP worden (intro scherm)
+User-select none opnemen in css elementen (hand pile etc.) zie playfield_card
+new game op congratulation scherm werkt niet....
+delay in animatie van refresh (new game)
+
+T
+drag hand komt onder de kaarten.
+
+
+
+T   + fout 1 : als je een niet-koning in een lege kolom dropt, dan moet SetCardBack
+R   + fout 2 : Als je je vinger op het groene beweegt, dan beweegt het menu. Je kunt dan door de opties scrollen.
+T   + subfout : als je VANUIT de hand een niet-koning in een lege kolom dropt, dan moet opacity teruggezet worden.
+T   + subfout : getrankName bevat nog geen "Ace"
+T   + fout 3 : Bij saven van een game moet je eerst veel tekst weghalen voordat je een naam kan intikken -> ik heb gewoon de tekst "enter the name of your game here" weggehaald 
+R   + fout 4 : Save invoerveld vind ik te klein -> ROEL wat vind jij ervan?
+R   + fout 5 : Als je tutorial tekst open hebt staan en je scroll er doorheen tot het einde en daarna terug dan scroll het achterste scherm ook mee
+R   + fout 6 : De kleuren van de kaarten met plaatjes lijken beetje niet zo helder tov andere kaarten
+RT  + fout 7 : Als ik tijdens een spel op de home button klik en daarna weer terugga naar het spel, moet ik opnieuw beginnen. ik had verwacht dat ik verder kon gaan waar ik gebleven was -> ROEL , weet jij wat we hieraan kunnen doen? tommer, als het goed is heb je daar geen last van als het een app is
+T   + fout 8 : Als je bij optie show all , meer dan 1 kiest dus bv show all twos and threes en daarna hide twos kiest dan verdwijnen de kaders ook bij de andere selectie 
+T   + subfout : border style dotted is niet zo duidelijk -> teruggezet naar solid
+R   + fout 9 : Aan de rechterkant mis ik kaders/blokjes/lijnen of iets wat aangeeft dat ik daar de kaarten kan opstapelen
+R   + fout 10 : Als ik het spel start dan zie ik de naam van het spel (links in de hoek) half Ipad 3.
+
+T   + check breedte van de hand cards
+T   + geluid is verkeerd om , dus initieel geen geluid. gaat dit nog steeds fout? HERTESTEN
+T   + originalCardzIndex geintroduceerd vanwege problemen bij foutieve drag van een bovenste kaart en vanwege problemen met tellen van Kings.
+    - bugfix : kingsinplace werd te vaak verhoogd, als koning bovenin drop op andere lege kolom. zie hertesten 07-04-2013
+T   + ik heb getstorage, hasstorage en removefromstorage in commentaar gezet. save met dezelfde key doet nl. netjes een overwrite.
+T   + refresh = reload, maar dan vergeet 'ie je menu-settings (sound on/off etc.) -> deze stikum opslaan in een zelf-bedachte localStorage naam? saveSettings loadSettings
+T   + nieuwe functie : delete a saved game? anders wordt de lijst van de gebruiker zo lang...
+T   + patience_touch is recent en patience_mouse is verouderd -> bijna klaar met bijwerken
+T   +- ik roep menu_button.click 2x aan, na (yes)LoadGame omdat declareMenuBarToggle er vanuit gaat dat het menu gesloten begint.
+
+
+R   + wiskundig plaatje van hands_background
+R   + het is mogelijk om door te spelen na de Congratulations-melding. òf de melding moet weg te klikken zijn òf het doorspelen moet onmogelijk gemaakt worden.
+R   + er zit nog een streep onder notification.
+R   + bij snel 2 verkeerde drag-acties achter elkaar, blijft de vorige notification nog staan..ROEL weet jij misschien een oplossing?
+R   + kaart-teken van de azen zichtbaarder maken : schoppen-teken iets omhoog bijv.
+R   + bij about uitleggen voor welke devices
+R   + logo's toegoeven aan menu: 'over'-optie
+R   + hand-kaarten moeten...2,5px naar rechts omdat de hoekjes 76 px breed zijn. werkt dit ook op mobieltje?
+R   - voorkomen dat je 2 kaarten tegelijk kunt draggen.
+R   + intro
+R   + breedtes van backgroundplaatjes testen . helemaal aan het eind
+R   + loadmodal wijzigen van input naar div + click en beide knoppen weg -> ik heb het omgezet, maar de click wordt niet aangeroepen. is dat omdat de divs op een modal zitten? ROEL
+
+RT  - patience_mouse is bijgewerkt. helaas werkt deze variant nog steeds niet goed, bij een snelle muisbeweging. misschien vanwege dat if-statement (regel 36) ?
+RT  +- $("#loadgamedialog").html("Sorry, there are no loadable games at this time."); //na dit is de initiele html vergeten/verdwenen -> heropbouwen!
+RT  - drop op basis van muispositie wijzigen in drop op basis van kaartpositie - zie hertesten
+RT  - reklametekst schrijven voor op internet -> winkel en wikipedia. -> T : laten reviewen door testers
+RT  + zullen we samen kijken hoe we het menu altijd kunnen sluiten nadat de speler een menu-item heeft aangeklikt?
+RT  + snel slepen van kaarten leidt tot meerdere Notifications bovenop elkaar...
+T   + na load werkt menu-open/dicht niet meer. dat komt omdat toggle niet meer bestaat. dat komt omdat playfield wordt overschreven -> declareMenuBarToggle
+T   + draggableRowArray kan verwarrend zijn, kan beter heten draggableArray. en zo ook : refreshDraggableRow
+
+     nice to have :
+?   - bug: doubleTap werkt niet altijd.
+R   - bij heel rijtje droppable -> speciaal icoon tonen tijdens drag(). er is al een setDragImage maar wijst naar een klaver koning! 132 en 153
+RT  - upgraden naar 1.9 jquery . oa voor drag-icon multiple cards
+R   + schud-geluid in functie shuffle()
+    + menu : geluid-optie aan/uit
+    + ballon met uitleg, nadat je iets probeert, wat geweigerd wordt.
+RT  - menu : regels in visuele vorm (ook via menu), over het speelveld heen (speler kan doorspelen?) - menu : help-optie = uitleg via piijlen a la powerpoint, dus opvolgend verschijnen van pijlen+uitlegballonnetje -> kan de speler doorspelen tijdens de uitleg?
+RT  - hoeveel comment mag blijven? +opschonen +  #playfield hoort bij /* GAME elements */ 
+    - BUG: Kaarten die niet draggable zijn, zijn het soms toch. (paar keer friemelen met muis)
+
+     versie 2 of later, waarin we oa smartphone willen ondersteunen
+R   - Scalable maken en testen op mobieltje -> oa voor azen : moeten ze naast elkaar of onder elkaar? testen op mobieltjes.
+RT  +- contstante voor 79 ? waardoor je de width van #hands kunt uitrekenen (en de height zou ook mooi zijn : 1.2 * card.height)
+    + when you touch a card and hold, all other cards of that rank will be highlighted until you stop touching the card. => menu optie(s)
+    - when you are moving a card, and you jiggle that card in the area of a certain column, you will be advised if that card may be moved to that column.
+    - menu : taal-optie ? beginnen met engels (standaard) en nederlands later inbouwen
+    - menu : send (saved) game to another, to play.
+    - undo functie eenmalig allerlaatste zet terugzetten - misschien is hiervoor een extra functie nodig PerformDropRow, die  1 of meer keer performdrop card aanroept
+    - statistieken bijhouden, eerst alleen zichtbaar via menu-optie, later misschien in de voeter
+    - melding : er zijn geen zetten meer mogelijk / u kunt niet verder. nieuw spel / quit.
+    - hands zakt gaandeweg het spel als numberofcardsincolumn te lang worden -> de begingrens hiervan moet nog even uitgezocht worden.
+    - hands verplaatsen, want de rijen kunnen nogal lang worden en over hands heengaan.
+    - liever dat piles & hands divs zelf ontdekken dat er op ze gedropt is, dan mbv coordinaten uitrekenen waar d'r gedropped is
+T   - bij menu-optie 'nieuw spel' -> huidige spel opnieuw spelen of een nieuw spel beginnen
+
+     done :
+    + refreshdraggalblerow ook na droponhand?
+    + hoe werkt refreshdraggalblerow igv empty column? je haalt de koning weg, bijv. naar hand/pile
+    + handsArray bestaat uit arrays. dat is niet nodig. enige waarde is occupied / not occupied.
+R   + id="menu_button" is een img. is dat handig? moet dat niet een div zijn met een background?
+R   + shadow ondrag anders dan standaard shadow + fixen van shadow-statement dat niet werkt (zoek op hertesten) regel 973
+R   + titel boven menu
+T   + zelfde geluid als kaart op hand of op pile
+RT  + meerdere spellen opslaan en laden.
+    + ccs naar apart bestand
+    + save game
+    + aparte functie BuildPlayfield
+T   + load game
+R   + muisevents ondersteunen voor oa microsoft tablet
+T   + menu: 'over-optie = over de makers en de versie enzo
+T   + als de rij te lang wordt, mogen de kaarten wel wat dichter bij elkaar -> verwerkt numberOfCardsInColumn in de bestaande offsetTop-formule
+T   + remove 'location' from initiation (has been commented and replaced with 'hasClass')
+T   + animaties bij load game mbv jquery.animate voor playfield & hands
+RT  + verbeter animaties bij load game  webkit / jquery. bijv. kaart voor kaart tonen.
+R   + leuke melding bij Game End op een layer - undo dragging in checkGameEnd() / stop player from dragging, because the game is over.
+    + Menu balk wordt blauw bij slepen kaart -> nu alleen nog maar de 2 buttons...check met Ben
+    + Ace pile moet rekening houden met menu with
+    + kaarten highliten op leuke goede manier (kleur kaders?)
+    + Notification op de juiste plek zetten
+    + Notifications maken (op de juiste plekken aanroepen)
+    - KAN NIET menu : naast de gewone opslaan-menu-item , deze optie : "spel altijd opslaan bij afsluiten". (default aan)
+    - #hand heeft geen dragstart...
+    + menu : regels in tekstvorm via menu
+    + te testen: draggable row naar lege kolom
+    + functie maken InitiateDeck()
+    + 'new game'-menu item ook in de titelbalk - afmaken
+    + playfield-inhoud = left = 20 top = 20
+    + positie controle niet op basis van window. regel 500 opgelost voor togglende menu
+    + cheat : checkbox to allow a card to be dropped on any card (to test e.g. empty column)
+    + context-sensitive menu (rechtermuisknop) vervangen door een eigen menu met eea
+    + waar zetten we de naam van de app ? Patience Max (er is een muziekband die zo heet....probleem?)
+    + console now also shows the numberOfKingsDroppedInEmptyColumn
+    + piles (div) //a div must be 'draggable'='true' if you want the div to be droppable / drop event
+    + ondblclick / double tap introduceren naar droponpile()
+    + jquery gebruiken voor touch events
+    + heel rijtje droppable maken
+    + constantCardTopMargin; //als ik dit aanzet, dan doet ie t niet meer.....moet kleine letter m zijn
+    + card_in_hand.top werkt niet ? wat ook al weer? later opgelost met offsetParent?
+    + kaart uit hand op speelveld-kaart
+    + bug highercard initieren
+    + events omzetten als card van playfield naar hand is verzet?
+    + bij herhaaldelijk getElementById -> gebruik object variabele -> gebruik jquery : $()
+    + zIndex vanaf de 2e drop (in dezelfde kolom natuurlijk)...
+-->
+
+
+zeev lahat - zeev179@walla.com
+geoffrey molenschot - geoffrey@millshot.nl
+mikal zeedzen - mikalzeedzen@gmail.com
+omid ghanavatian - omid187@gmail.com
+
+Beste tester,
+kun je tijdens het testen o.a. op de volgende zaken letten:
+
+1. het spel als geheel
+- zou je de app kopen?
+- hoeveel zou je er ongeveer aan uit willen geven?
+- zou je het regelmatig spelen, of na een week weggooien?
+- vind je het spannend?
+- vind je het ontspannend?
+
+2. gebruiksgemak
+- wat vind je van de opbouw van het speelveld?
+- staat eea op een prettige plek? de azen, de hand-kaarten, etc.
+- wat vind je van de kleuren en vormen en plaatjes?
+- is alles leesbaar?
+- zijn de regels duidelijk?
+- zijn de regels duidelijk uitgelegd / beschreven ?
+- wat vind je van het menu? 
+- voldoende menu items?
+- zijn het de verwachte menu-items?
+- werkt alles logisch/zoals verwacht? vooral het slepen.
+
+3. ideetjes voor de volgende versies
+- heb je verbetertips?
+
+en natuurlijk : zijn er fouten?
