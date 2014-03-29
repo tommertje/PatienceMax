@@ -46,6 +46,9 @@ div.playfield {
         background-repeat: no-repeat;
         background-position: top;        
     }
+    #menu {
+        width: 190px;
+    }
     #menu #menu_title, #logo{
         height: 36px;
         font-size: 15px;
@@ -62,6 +65,7 @@ div.playfield {
         text-indent: 15px;
     }
     #menu ul li {
+        width: 190px;
         line-height: 35px;
     }
     /*#menu li {
@@ -77,6 +81,9 @@ div.playfield {
     }
     #refresh_button {
         right:10px;
+    }
+    #lowest_menuitem {
+        width: 190px;
     }
     #notification_message_sp {
         font-size: 16px;
@@ -95,6 +102,9 @@ div.playfield {
         font-size: 10px;
         line-height: 15px; /* test this */
     }
+    #menu {
+        width: 120px;
+    }
     #menu_title, #logo{
         padding:1px 0px 0px 0px;
     }
@@ -107,6 +117,7 @@ div.playfield {
     }
     #menu ul li {
         line-height: 17px;
+        width: 120px;
     }
     #menu li {
         height: 17px; /* relatief maken aan screen.height */
@@ -125,6 +136,9 @@ div.playfield {
     }
     #refresh_button {
         right:3px;
+    }
+    #lowest_menuitem {
+        width: 120px;
     }
     #notification_message_sp {
         font-size: 10px;
@@ -209,13 +223,11 @@ div.playfield {
 }
 
 #menu ul li {
-    width: 190px;
     background: #181a1e;
     border-bottom: 2px solid #020303;
 }
 
 #menu #lowest_menuitem {
-    width: 190px;
     background: #181a1e;
     /*line-height: 28px;*/
     border-bottom: 2px solid #020303;
@@ -680,3 +692,11 @@ position:absolute;
             height: 400px;
             z-index:0; /* 1 lower than cards, because it is underneath 
         } */
+
+.portrait_mode {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }

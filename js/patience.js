@@ -116,6 +116,17 @@ cardsArray = deckArray.concat(deckArray2); // we need 2 of the same decks, put t
 //});
 //END GAME INTRO 
 
+$(window).resize(function () {
+    if (screen.width < screen.height) {
+        $("#playfield").addClass("portrait_mode");
+        $("#menu").addClass("portrait_mode");
+    }
+    else {
+        $("#playfield").removeClass("portrait_mode");
+        $("#menu").removeClass("portrait_mode");
+    }
+});
+
 //INITIATIONS from storage
 $(window).bind("load", function () {
 
@@ -161,21 +172,22 @@ $(window).bind("load", function () {
         };
     }
 
-    constantMenuWidth = 190; //not (yet) related to the device width (we already resized font size to device...)
+    constantMenuWidth = parseInt($("#menu").css("width"));//190; //related to the device width
     constantPlayfieldLeftmargin = screen.width * 13 / 1000; // = 1,3% of the device width
     constantPlayfieldTopmargin = parseInt($("#menu_bar").css("height")) + (screen.width * 2 / 100); //playfield starts a bit below the menu bar
-    constantCardWidth = /*screen.width / 14 > 71 ? 71 :*/ Math.round(screen.width / 14); /*$("#card0").width()*/;//* 1.1126760563; //was 79 ; used for card positioning, max=71px
-    if (constantCardWidth > parseInt($(".card").css("max-width"))) constantCardWidth = parseInt($(".card").css("max-width")); //ideal for iPad
+    constantCardWidth = Math.round(screen.width / 14); //was 79 ; used for card positioning, max=71px
+    if (constantCardWidth > parseInt($(".card").css("max-width"))) constantCardWidth = parseInt($(".card").css("max-width")); // = ideal for iPad
     constantCardHeight = Math.round(96 / 71 * constantCardWidth);//aspect ratio must be equal to source images, but no decimals //moet worden $("#0").height(); // used for card positioning
     constantCardWidthInterspace = Math.round(constantCardWidth / 9); //8; //margin between columns, used for card positioning on playfield
-    constantCardWidth += constantCardWidthInterspace; //this variable is used more often wíth interspace, than without.
+    //constantCardWidth += constantCardWidthInterspace; //this variable is used less often wíth interspace, than without.
     //if ($("#card0").css("height") > $(".card").css("max-height")) $("#card99").css("height") = $(".card").css("max-height");
     constantCardHeightInterspace = constantCardHeight / 4;//22; // used for card positioning on playfield ; this determines how much of the card is shown, before the next card in the column is shown
     constantHandHeight = constantCardHeight + 5; //5 extra pixels because background image contains edges
-    constantHandTop = screen.height - constantHandHeight - Math.round(screen.height / 70) - 270; //250 wegens RIPPLE ipad = ca. 14 margin from the bottom
+    constantHandTop = screen.height - constantHandHeight - Math.round(screen.height / 70); // = ca. 14 margin from the bottom
+    if (screen.width > 1300) constantHandTop -= 60; //for testing with RIPPLE disabled
     constantHandLeftMargin = screen.width < 800 ? 1 : 2; //pixels related to the device
     constantHandCardMargin = screen.width < 800 ? 3 : 3;//9;12; //1.18426760563; //was 1.1826760563 //this comes close to the cardmargin in the background image
-    constantPilesWidth = 2 * (constantCardWidth - constantCardWidthInterspace) + 11;
+    constantPilesWidth = 2 * constantCardWidth + 11;
     constantPilesHeight = 4 * constantCardHeight + 38; //3 times the margin(3) between the card + 7? extra pixels because background image contains edges
 
     buildTheGamefield(true);
@@ -204,9 +216,9 @@ function buildTheGamefield(blnShowFade) {
 
         $('#menu').show();
 
-        $('#notification_message_sp').css("top", constantHandTop); //************  dit werkt niet
-        $('#notification_message_sp').css("height", constantHandHeight); //************  dit werkt niet
-        $('#notification_message_sp').css("width", constantCardWidth * 2); //************  dit werkt niet
+        $('#notification_message_sp').css("top", constantHandTop);
+        $('#notification_message_sp').css("height", constantHandHeight);
+        $('#notification_message_sp').css("width", (constantCardWidth + constantCardWidthInterspace) * 2);
     //$('#notification_message_sp').css("font-size", parseInt($('#menu').css("font-size")));
         
         //$('#playfield').addClass("menu_is_open");
@@ -217,16 +229,16 @@ function buildTheGamefield(blnShowFade) {
         //set the location of Hands & Piles
         $("#hands").css("top", constantHandTop);
         $("#hands").css("height", constantHandHeight);
-        $("#hands").css("width", constantCardWidth * maxCardsinHand + 9); //some extra pixels because background image contains edges
+        $("#hands").css("width", (constantCardWidth + constantCardWidthInterspace) * maxCardsinHand + 9); //some extra pixels because background image contains edges
 
         $(".card_border_background").css("height", constantCardHeight + 5);
-        $(".card_border_background").css("width", constantCardWidth - constantCardWidthInterspace + 3);//Math.round(parseInt($("#hands").css("width")) / maxCardsinHand));
+        $(".card_border_background").css("width", constantCardWidth + 3);//Math.round(parseInt($("#hands").css("width")) / maxCardsinHand));
 
-        $("#cardbackground_in_hand1").css("left", 0 * (constantCardWidth + constantHandCardMargin));
-        $("#cardbackground_in_hand2").css("left", 1 * (constantCardWidth + constantHandCardMargin));
-        $("#cardbackground_in_hand3").css("left", 2 * (constantCardWidth + constantHandCardMargin));
-        $("#cardbackground_in_hand4").css("left", 3 * (constantCardWidth + constantHandCardMargin));
-        $("#cardbackground_in_hand5").css("left", 4 * (constantCardWidth + constantHandCardMargin));
+        $("#cardbackground_in_hand1").css("left", 0 * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin));
+        $("#cardbackground_in_hand2").css("left", 1 * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin));
+        $("#cardbackground_in_hand3").css("left", 2 * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin));
+        $("#cardbackground_in_hand4").css("left", 3 * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin));
+        $("#cardbackground_in_hand5").css("left", 4 * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin));
         $("#cardbackground_in_hand1").css("top", 0);
         $("#cardbackground_in_hand2").css("top", 0);
         $("#cardbackground_in_hand3").css("top", 0);
@@ -237,7 +249,7 @@ function buildTheGamefield(blnShowFade) {
         $('#hands').show();
         $('#hands').transition({ y: '0', duration: intRefreshSpeed * 800 });
 
-        $("#piles").css("left", constantPlayfieldLeftmargin + (10 * constantCardWidth) + constantPlayfieldLeftmargin); //todo ideale positie ontwerpen/bepalen
+        $("#piles").css("left", (2 * constantPlayfieldLeftmargin) + (10 * (constantCardWidth+ constantCardWidthInterspace)));
         $("#piles").css("top", constantPlayfieldTopmargin);
         $("#piles").css("height", constantPilesHeight);
         $("#piles").css("width", constantPilesWidth);
@@ -246,10 +258,10 @@ function buildTheGamefield(blnShowFade) {
         $("#cardbackground_in_pile2").css("left", 0);
         $("#cardbackground_in_pile3").css("left", 0);
         $("#cardbackground_in_pile4").css("left", 0);
-        $("#cardbackground_in_pile5").css("left", constantCardWidth - constantCardWidthInterspace + 7);
-        $("#cardbackground_in_pile6").css("left", constantCardWidth - constantCardWidthInterspace + 7);
-        $("#cardbackground_in_pile7").css("left", constantCardWidth - constantCardWidthInterspace + 7);
-        $("#cardbackground_in_pile8").css("left", constantCardWidth - constantCardWidthInterspace + 7);
+        $("#cardbackground_in_pile5").css("left", constantCardWidth + 7);
+        $("#cardbackground_in_pile6").css("left", constantCardWidth + 7);
+        $("#cardbackground_in_pile7").css("left", constantCardWidth + 7);
+        $("#cardbackground_in_pile8").css("left", constantCardWidth + 7);
         $("#cardbackground_in_pile1").css("top", 0 * (constantCardHeight + 9));
         $("#cardbackground_in_pile2").css("top", 1 * (constantCardHeight + 9));
         $("#cardbackground_in_pile3").css("top", 2 * (constantCardHeight + 9));
@@ -301,7 +313,7 @@ function buildTheGamefield(blnShowFade) {
     }
     
     $(".card").css('height', constantCardHeight); //47
-    $(".card").css('width', constantCardWidth - constantCardWidthInterspace); //35
+    $(".card").css('width', constantCardWidth); //35
     $(".card").css('background-size', 'cover'); //this option respects the aspect ratio
 
     for (loopingCardNumber = 0; loopingCardNumber <= 99; loopingCardNumber++) {
@@ -324,7 +336,7 @@ function buildTheGamefield(blnShowFade) {
         //$("#card" + loopingCardNumber).css('left', 20);
         //$("#card" + loopingCardNumber).css('top', 70);
         //$("#card" + loopingCardNumber).show();
-        intCardLeftPosition = constantPlayfieldLeftmargin + (loopingColumnNumber * constantCardWidth);
+        intCardLeftPosition = constantPlayfieldLeftmargin + (loopingColumnNumber * (constantCardWidth + constantCardWidthInterspace));
         intCardTopPosition = constantPlayfieldTopmargin + (loopingRowNumber * constantCardHeightInterspace);
         $("#card" + loopingCardNumber).transition({ left: intCardLeftPosition, duration: 2500 });
         $("#card" + loopingCardNumber).transition({ top: intCardTopPosition, duration: 2500 });
@@ -332,7 +344,7 @@ function buildTheGamefield(blnShowFade) {
 
     // Build The Hand *********
     $(".card_in_hand").css('height', constantCardHeight); //47
-    $(".card_in_hand").css('width', constantCardWidth - constantCardWidthInterspace); //35
+    $(".card_in_hand").css('width', constantCardWidth); //35
     //$(".card_in_hand").css('background-size', 'cover'); //this option respects the aspect ratio
     //reuse some variables
     intCardLeftPosition = constantHandLeftMargin;//3 the first card starts after the left corner signs //390 rvr aan gepast anders werkt niet goed per divice width //dit vervangen door dragDiv.getAttributeNode('left') ter vervanging van constantCardInHandLeftMargin hoe
@@ -347,7 +359,7 @@ function buildTheGamefield(blnShowFade) {
         //no initial z-index value needed, because no card can be dropped on a card-in-hand
         $("#card" + loopingCardNumber).transition({ left: intCardLeftPosition, duration: 2200 });
 
-        intCardLeftPosition += constantCardWidth /*- constantCardWidthInterspace */+ constantHandCardMargin;
+        intCardLeftPosition += constantCardWidth + constantCardWidthInterspace + constantHandCardMargin;
     }
            
     // Initiate the piles with invalid cardnumber, to indicate the piles are empty
@@ -555,7 +567,7 @@ function performDropOnPlayfield(passeddragDivIDCardNumber, passedDropDivIDCardNu
 
     if (passedDropDivIDCardNumber == -1) {
         //special indication : King dropped in an empty column
-        var kingLeft = constantPlayfieldLeftmargin + (dropColumnNumber * constantCardWidth); //here the + means "add numbers"
+        var kingLeft = constantPlayfieldLeftmargin + (dropColumnNumber * (constantCardWidth + constantCardWidthInterspace)); //here the + means "add numbers"
         $("#card" + passeddragDivIDCardNumber).css("left", kingLeft + "px");                //here the + means "concatenate strings"
         $("#card" + passeddragDivIDCardNumber).css("top", constantPlayfieldTopmargin + "px");
         $("#card" + passeddragDivIDCardNumber).css("z-index", 0);
@@ -696,7 +708,7 @@ function droponhand(e) {
 
                 //dragDiv.setAttribute('ondrop', "droponhand(event, " + dragDivIDCardNumber + ")");
                 //set new position                
-                $("#card" + dragDivIDCardNumber).css("left", constantHandLeftMargin + (cardPositionInHandCounter * (constantCardWidth /*- constantCardWidthInterspace*/ + constantHandCardMargin)));
+                $("#card" + dragDivIDCardNumber).css("left", constantHandLeftMargin + (cardPositionInHandCounter * (constantCardWidth + constantCardWidthInterspace + constantHandCardMargin)));
                 $("#card" + dragDivIDCardNumber).css("top", 2); // 2 pixels because of the edge in the background image
                 //the z-index does not have to be changed ; it will be (re)set whenever card is dropped in playfield
 
@@ -802,7 +814,7 @@ function droponpile(e) {
                 $("#card" + dragDivIDCardNumber).css("top", loopingPileNumber * (constantCardHeight + 9) + 2);//2 extra pixels because the background image contains edges
                 $("#card" + dragDivIDCardNumber).css("z-Index", 1); //ace may have very low zIndex
             } else { //the 2nd column / right column
-                $("#card" + dragDivIDCardNumber).css("left", constantCardWidth + 1); //(document.getElementById('piles').offsetLeft + (loopingPileNumber * constantCardWidth)).toString() + "px";
+                $("#card" + dragDivIDCardNumber).css("left", constantCardWidth + constantCardWidthInterspace + 1); //(document.getElementById('piles').offsetLeft + (loopingPileNumber * constantCardWidth)).toString() + "px";
                 $("#card" + dragDivIDCardNumber).css("top", (loopingPileNumber - intMaxPilesInOneColumn) * (constantCardHeight + 9) + 2);//(document.getElementById('piles').offsetTop).toString() + "px";
                 $("#card" + dragDivIDCardNumber).css("z-Index", 1); //ace may have very low zIndex
             }
@@ -1265,18 +1277,19 @@ $('#maxallowedcardsinhand').toggle(function () {
     maxCardsinHand = 5;
     saveSettings();
     $('#maxallowedcardsinhand').text("Allow 4 cards in hand"); //the menu text is ready for the next toggle back to 4
-    $("#hands").css("width", constantCardWidth * maxCardsinHand + 9); //some extra pixels because background image contains edges
+    $("#hands").css("width", (constantCardWidth + constantCardWidthInterspace) * maxCardsinHand + 9); //some extra pixels because background image contains edges
     //$('#hands').css('background-image', 'url(images/hand_background_5cards.png)');
     $('#cardbackground_in_hand5').show();
 },
     function () {
         if (handIsOccupiedArray[4]) {
             showNotification("5th hand is currently occupied. You must first free the 5th hand, before you can change this setting.")
+            $('#maxallowedcardsinhand').click(); //toggle back
         } else {
             maxCardsinHand = 4;
             saveSettings();
             $('#maxallowedcardsinhand').text("Allow 5 cards in hand");
-            $("#hands").css("width", constantCardWidth * maxCardsinHand + 9); //some extra pixels because background image contains edges
+            $("#hands").css("width", (constantCardWidth + constantCardWidthInterspace) * maxCardsinHand + 9); //some extra pixels because background image contains edges
             //$('#hands').css('background-image', 'url(images/hand_background.png)');
             $('#cardbackground_in_hand5').hide(); //if we use hide, we don't really have to narrow the #hands, but we do it to be sure.
         }
